@@ -12,6 +12,9 @@ use std::path::PathBuf;
 use std::time::Duration;
 use zbus::blocking::{Connection, Proxy};
 
+mod tema;
+use tema::Tema;
+
 const ROWS: u32 = 5;
 const PCT_PER_ROW: u32 = 100 / ROWS;
 const BOLT_ROW_INDEX: u32 = ROWS / 2;
@@ -155,6 +158,7 @@ pub struct BatteryApplet {
     config: AppletConfig,
     profile_model: segmented_button::SingleSelectModel,
     dark_mode: bool,
+    tema: Tema,
 
     battery_percentage: u32,
     is_charging: bool,
@@ -248,6 +252,7 @@ impl Default for BatteryApplet {
             // Starts as false, then gets replaced by the actual COSMIC
             // theme state through fetch_all_states().
             dark_mode: false,
+            tema: Tema::load(<BatteryApplet as Application>::APP_ID),
 
             battery_percentage: 100,
             is_charging: false,
@@ -293,7 +298,12 @@ impl Application for BatteryApplet {
             ..Default::default()
         };
 
-        (applet, fetch_all_states())
+        let tema = applet.aplicar_tema(
+            cosmic::theme::active().cosmic().is_dark,
+            false,
+        );
+
+        (applet, Task::batch([tema, fetch_all_states()]))
     }
 
     fn update(
@@ -361,6 +371,8 @@ impl Application for BatteryApplet {
                     return Task::none();
                 };
 
+                let tema = self.reler_tema();
+
                 let new_id = window::Id::unique();
                 self.popup = Some(new_id);
 
@@ -372,9 +384,11 @@ impl Application for BatteryApplet {
                     None,
                 );
 
-                return cosmic::iced::platform_specific::shell::commands::popup::
+                let abrir = cosmic::iced::platform_specific::shell::commands::popup::
                     get_popup::<Message>(popup_settings)
                     .map(cosmic::Action::from);
+
+                return Task::batch([tema, abrir]);
             }
 
             Message::SwitchTab(tab) => {
@@ -637,6 +651,22 @@ impl Application for BatteryApplet {
         Task::none()
     }
 
+    fn system_theme_update(
+        &mut self,
+        _keys: &[&'static str],
+        new_theme: &cosmic::cosmic_theme::Theme,
+    ) -> Task<Self::Message> {
+        self.aplicar_tema(new_theme.is_dark, false)
+    }
+
+    fn system_theme_mode_update(
+        &mut self,
+        _keys: &[&'static str],
+        mode: &cosmic::cosmic_theme::ThemeMode,
+    ) -> Task<Self::Message> {
+        self.aplicar_tema(mode.is_dark, false)
+    }
+
     fn subscription(&self) -> Subscription<Self::Message> {
         time::every(Duration::from_secs(3))
             .map(|_| Message::Tick)
@@ -645,8 +675,10 @@ impl Application for BatteryApplet {
     fn view(&self) -> Element<'_, Self::Message> {
         let active_theme = cosmic::theme::active();
 
-        let fallback_accent: Color =
-            Color::from(active_theme.cosmic().accent.base);
+        let fallback_accent: Color = match self.tema.cor("tinta") {
+            Some(tinta) => tinta.iced(),
+            None => Color::from(active_theme.cosmic().accent.base),
+        };
 
         let accent_color = if self.config.use_system_accent {
             Some(fallback_accent)
@@ -895,6 +927,26 @@ impl Application for BatteryApplet {
 }
 
 impl BatteryApplet {
+    fn aplicar_tema(&self, dark: bool, antes: bool) -> Task<Message> {
+        match self.tema.cosmic(dark) {
+            Some(theme) => cosmic::command::set_theme(theme),
+            None if antes => {
+                cosmic::command::set_theme(self.core.system_theme().clone())
+            }
+            None => Task::none(),
+        }
+    }
+
+    fn reler_tema(&mut self) -> Task<Message> {
+        let novo = Tema::load(<Self as Application>::APP_ID);
+        if novo == self.tema {
+            return Task::none();
+        }
+        let antes = self.tema.cosmic(true).is_some();
+        self.tema = novo;
+        self.aplicar_tema(cosmic::theme::active().cosmic().is_dark, antes)
+    }
+
     fn ui_font(&self) -> Option<cosmic::iced::Font> {
         if self.config.use_monospace_font {
             Some(cosmic::iced::Font::MONOSPACE)
