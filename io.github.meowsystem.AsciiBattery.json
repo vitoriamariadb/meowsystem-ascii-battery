@@ -1,10 +1,10 @@
 {
-  "id": "com.github.pewmoe.cosmic-ext-ASCII-dot-battery",
+  "id": "io.github.meowsystem.AsciiBattery",
   "runtime": "org.freedesktop.Platform",
   "runtime-version": "25.08",
   "sdk": "org.freedesktop.Sdk",
   "sdk-extensions": ["org.freedesktop.Sdk.Extension.rust-stable"],
-  "command": "cosmic-ext-ascii-dot-battery",
+  "command": "meowsystem-ascii-battery",
   "finish-args": [
     "--socket=wayland",
     "--share=ipc",
@@ -21,20 +21,20 @@
     "append-path": "/usr/lib/sdk/rust-stable/bin",
     "env": {
       "CARGO_BUILD_JOBS": "8",
-      "CARGO_HOME": "/run/build/cosmic-ext-ascii-dot-battery/cargo",
-      "LOCKSTEP_XML_PATH": "/run/build/cosmic-ext-ascii-dot-battery/cargo/vendor/atspi-common-0.13.0/xml"
+      "CARGO_HOME": "/run/build/meowsystem-ascii-battery/cargo",
+      "LOCKSTEP_XML_PATH": "/run/build/meowsystem-ascii-battery/cargo/vendor/atspi-common-0.13.0/xml"
     }
   },
   "modules": [
     {
-      "name": "cosmic-ext-ascii-dot-battery",
+      "name": "meowsystem-ascii-battery",
       "buildsystem": "simple",
       "build-commands": [
         "cargo build --release --frozen --offline",
-        "install -Dm0755 target/release/cosmic-ext-ascii-dot-battery /app/bin/cosmic-ext-ascii-dot-battery",
-        "install -Dm0644 target/xdgen/app.desktop /app/share/applications/com.github.pewmoe.cosmic-ext-ASCII-dot-battery.desktop",
-        "install -Dm0644 target/xdgen/app.metainfo.xml /app/share/metainfo/com.github.pewmoe.cosmic-ext-ASCII-dot-battery.metainfo.xml",
-        "install -Dm0644 resources/icon.svg /app/share/icons/hicolor/scalable/apps/com.github.pewmoe.cosmic-ext-ASCII-dot-battery.svg"
+        "install -Dm0755 target/release/meowsystem-ascii-battery /app/bin/meowsystem-ascii-battery",
+        "install -Dm0644 target/xdgen/io.github.meowsystem.AsciiBattery.desktop /app/share/applications/io.github.meowsystem.AsciiBattery.desktop",
+        "install -Dm0644 target/xdgen/io.github.meowsystem.AsciiBattery.metainfo.xml /app/share/metainfo/io.github.meowsystem.AsciiBattery.metainfo.xml",
+        "install -Dm0644 resources/io.github.meowsystem.AsciiBattery.svg /app/share/icons/hicolor/scalable/apps/io.github.meowsystem.AsciiBattery.svg"
       ],
       "sources": [
         {

@@ -1,5 +1,5 @@
-name := 'cosmic-ext-ascii-dot-battery'
-appid := 'com.github.pewmoe.cosmic-ext-ASCII-dot-battery'
+name := 'meowsystem-ascii-battery'
+appid := 'io.github.meowsystem.AsciiBattery'
 
 rootdir := ''
 prefix := '/usr'
@@ -53,9 +53,9 @@ run *args:
 # Installs files
 install:
     install -Dm0755 {{ cargo-target-dir / 'release' / name }} {{bin-dst}}
-    install -Dm0644 {{ 'target' / 'xdgen' / 'app.desktop' }} {{desktop-dst}}
-    install -Dm0644 {{ 'target' / 'xdgen' / 'app.metainfo.xml' }} {{appdata-dst}}
-    install -Dm0644 resources/icon.svg {{icon-dst}}
+    install -Dm0644 {{ 'target' / 'xdgen' / desktop }} {{desktop-dst}}
+    install -Dm0644 {{ 'target' / 'xdgen' / appdata }} {{appdata-dst}}
+    install -Dm0644 resources/{{appid}}.svg {{icon-dst}}
 
 # Uninstalls installed files
 uninstall:

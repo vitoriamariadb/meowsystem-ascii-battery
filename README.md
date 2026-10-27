@@ -73,7 +73,7 @@ This applet is submitted to the COSMIC Flatpak repository.
 
 ```bash
 flatpak remote-add --if-not-exists --user cosmic https://apt.pop-os.org/cosmic/cosmic.flatpakrepo
-flatpak install --user cosmic com.github.pewmoe.cosmic-ext-ascii-dot-battery
+flatpak install --user cosmic io.github.meowsystem.AsciiBattery
 ```
 
 Then add it to your panel through:

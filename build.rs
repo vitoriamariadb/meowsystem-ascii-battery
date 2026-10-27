@@ -7,13 +7,13 @@ fn main() {
         .comment(FluentString("app-comment"))
         .keywords(FluentString("app-keywords"));
 
-    let desktop_entry = app.expand_desktop("resources/app.desktop", &ctx).unwrap();
+    let desktop_entry = app.expand_desktop("resources/io.github.meowsystem.AsciiBattery.desktop", &ctx).unwrap();
     let metainfo = app
-        .expand_metainfo("resources/app.metainfo.xml", &ctx)
+        .expand_metainfo("resources/io.github.meowsystem.AsciiBattery.metainfo.xml", &ctx)
         .unwrap();
 
     let output = Path::new("target/xdgen/");
     fs::create_dir_all(output).unwrap();
-    fs::write(output.join("app.desktop"), desktop_entry).unwrap();
-    fs::write(output.join("app.metainfo.xml"), metainfo).unwrap();
+    fs::write(output.join("io.github.meowsystem.AsciiBattery.desktop"), desktop_entry).unwrap();
+    fs::write(output.join("io.github.meowsystem.AsciiBattery.metainfo.xml"), metainfo).unwrap();
 }

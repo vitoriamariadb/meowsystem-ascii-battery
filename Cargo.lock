@@ -927,7 +927,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "cosmic-ext-ascii-dot-battery"
+name = "meowsystem-ascii-battery"
 version = "1.3.0"
 dependencies = [
  "cosmic-config",
