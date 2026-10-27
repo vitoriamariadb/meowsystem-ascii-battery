@@ -57,6 +57,16 @@ install:
     install -Dm0644 {{ 'target' / 'xdgen' / appdata }} {{appdata-dst}}
     install -Dm0644 resources/{{appid}}.svg {{icon-dst}}
 
+install-user: build-release
+    install -Dm0755 {{ cargo-target-dir / 'release' / name }} "$HOME/.local/bin/{{name}}"
+    mkdir -p "$HOME/.local/share/applications"
+    sed "s|^Exec=.*|Exec=$HOME/.local/bin/{{name}}|" resources/{{desktop}} > "$HOME/.local/share/applications/{{desktop}}"
+    install -Dm0644 resources/{{appid}}.svg "$HOME/.local/share/icons/hicolor/scalable/apps/{{appid}}.svg"
+    install -Dm0644 resources/{{appdata}} "$HOME/.local/share/metainfo/{{appdata}}"
+
+uninstall-user:
+    rm -f "$HOME/.local/bin/{{name}}" "$HOME/.local/share/applications/{{desktop}}" "$HOME/.local/share/icons/hicolor/scalable/apps/{{appid}}.svg" "$HOME/.local/share/metainfo/{{appdata}}"
+
 # Uninstalls installed files
 uninstall:
     rm {{bin-dst}} {{desktop-dst}} {{icon-dst}}

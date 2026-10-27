@@ -2,10 +2,11 @@
 name = "meowsystem-ascii-battery"
 version = "1.3.0"
 edition = "2021"
+authors = ["pewmoe (upstream)", "Vitória Maria", "André Farias"]
 license = "MPL-2.0"
-description = "Battery style applet for cosmic desktop"
+description = "Battery style applet for cosmic desktop. A fork of pewmoe/Cosmic-Desktop-ASCII-Battery-Applet themed by MeowSystem."
 
-repository = "https://github.com/your-username/meowsystem-ascii-battery"
+repository = "https://github.com/vitoriamariadb/meowsystem-ascii-battery"
 
 [build-dependencies]
 xdgen = "0.1"

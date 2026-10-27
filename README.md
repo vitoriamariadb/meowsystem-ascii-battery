@@ -1,3 +1,13 @@
+# Bateria em ASCII (ASCII Deck)
+
+O applet de bateria, brilho e perfis de energia do [COSMIC](https://system76.com/cosmic) em blocos de texto, com as cores do theme pack do [MeowSystem](https://github.com/vitoriamariadb/MeowSystem).
+
+## De onde vem
+
+A Bateria em ASCII é um fork do **[Cosmic-Desktop-ASCII-Battery-Applet](https://github.com/pewmoe/Cosmic-Desktop-ASCII-Battery-Applet)**, de **pewmoe**. A barra de blocos, os controles de brilho e de energia e o popup são trabalho dele. Este fork muda o nome (`meowsystem-ascii-battery`, app id `io.github.meowsystem.AsciiBattery`) e acrescenta a extensão de tema do MeowSystem, descrita em [INTEGRACAO.md](INTEGRACAO.md). A licença continua a do original, MPL-2.0 ([LICENSE](LICENSE)). Autoria do fork: Vitória Maria e André Farias.
+
+---
+
 # ASCII Deck
 
 A compact, customizable control applet for the [COSMIC](https://system76.com/cosmic) desktop panel — built around ASCII-style battery and brightness controls instead of traditional icons.
@@ -67,26 +77,15 @@ A compact, customizable control applet for the [COSMIC](https://system76.com/cos
 
 ## Installation
 
-### Via the COSMIC Flatpak repository
-
-This applet is submitted to the COSMIC Flatpak repository.
-
-```bash
-flatpak remote-add --if-not-exists --user cosmic https://apt.pop-os.org/cosmic/cosmic.flatpakrepo
-flatpak install --user cosmic io.github.meowsystem.AsciiBattery
-```
-
-Then add it to your panel through:
-
-**Settings → Desktop → Panel → Add Applet**
-
 ### Building from source
+
+The MeowSystem builds and installs it from the commit pinned in `assets/extensoes/ascii-battery.pino`. By hand, `just install-user` puts it in `~/.local`, no root.
 
 Requires [`just`](https://github.com/casey/just), a Rust toolchain, and the COSMIC development libraries.
 
 ```bash
-git clone https://github.com/pewmoe/Cosmic-Desktop-ASCII-Battery-Applet.git
-cd Cosmic-Desktop-ASCII-Battery-Applet
+git clone https://github.com/vitoriamariadb/meowsystem-ascii-battery.git
+cd meowsystem-ascii-battery
 just build-release
 sudo just install
 ```

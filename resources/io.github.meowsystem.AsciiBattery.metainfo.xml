@@ -12,12 +12,16 @@
       profiles, adjusting screen brightness with an ASCII slider, and choosing
       an accent color.
     </p>
+    <p>
+      Fork of pewmoe's ASCII battery applet, themed by MeowSystem: the panel bar and the
+      popup take the colours the theme pack puts in an optional extension file.
+    </p>
   </description>
   <icon type="remote" width="64" height="64" scale="1">
     https://github.com/pop-os/cosmic-app-template/raw/main/resources/icons/hicolor/scalable/apps/icon.svg
   </icon>
   <url type="vcs-browser">https://github.com/pewmoe/Cosmic-Desktop-ASCII-Battery-Applet</url>
-  <url type="homepage">https://github.com/pewmoe/Cosmic-Desktop-ASCII-Battery-Applet</url>
+  <url type="homepage">https://github.com/vitoriamariadb/meowsystem-ascii-battery</url>
   <launchable type="desktop-id">io.github.meowsystem.AsciiBattery.desktop</launchable>
   <developer id="io.github.pewmoe">
     <name>Mohammed</name>

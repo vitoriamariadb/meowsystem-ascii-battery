@@ -1841,7 +1841,8 @@ impl BatteryApplet {
 
         let author =
             self.styled_text(
-                "pewmoe".to_string(),
+                "pewmoe (fork: Vitória Maria, André Farias)"
+                    .to_string(),
                 12,
             );
 
@@ -1865,12 +1866,12 @@ impl BatteryApplet {
                     12
                 ),
                 self.styled_text(
-                    "Repository: github.com/pewmoe/Cosmic-Desktop-ASCII-Battery-Applet"
+                    "Upstream: github.com/pewmoe/Cosmic-Desktop-ASCII-Battery-Applet"
                         .to_string(),
                     10
                 ),
                 self.styled_text(
-                    "Support: (same repository, open an issue)"
+                    "Fork: github.com/vitoriamariadb/meowsystem-ascii-battery"
                         .to_string(),
                     10
                 ),
