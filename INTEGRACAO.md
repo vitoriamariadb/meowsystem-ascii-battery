@@ -58,7 +58,7 @@ Sem extensão, tudo segue o tema do COSMIC. Com ela, o pack põe as cores por ci
 
 | chave | valor | onde aparece |
 | --- | --- | --- |
-| `acento` | cor | botões principais, escolhas marcadas e interruptores ligados |
+| `acento` | cor | botões principais, escolhas marcadas, interruptores ligados e a aba aberta do popup (ⓘ ou ⚙) |
 | `destaque` | cor | texto e ícones sobre o acento |
 | `fundo` | cor | fundo do popup |
 | `borda` | cor | contorno e divisórias do popup |

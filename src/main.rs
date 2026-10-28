@@ -18,7 +18,7 @@ use tema::Tema;
 const ROWS: u32 = 5;
 const PCT_PER_ROW: u32 = 100 / ROWS;
 const BOLT_ROW_INDEX: u32 = ROWS / 2;
-const APP_VERSION: &str = "1.3.0";
+const APP_VERSION: &str = "1.4.0";
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum PopupTab {
@@ -876,6 +876,13 @@ impl Application for BatteryApplet {
         if let Some(f) = ui_font {
             info_label = info_label.font(f);
             gear_label = gear_label.font(f);
+        }
+
+        if let Some(cor) = aba_marcada(self.active_tab, PopupTab::About, fallback_accent) {
+            info_label = info_label.class(cosmic::theme::Text::Color(cor));
+        }
+        if let Some(cor) = aba_marcada(self.active_tab, PopupTab::Settings, fallback_accent) {
+            gear_label = gear_label.class(cosmic::theme::Text::Color(cor));
         }
 
         let info_btn = button::custom(info_label)
@@ -1906,6 +1913,10 @@ impl BatteryApplet {
     }
 }
 
+fn aba_marcada(ativa: PopupTab, aba: PopupTab, acento: Color) -> Option<Color> {
+    (ativa == aba).then_some(acento)
+}
+
 fn get_config_path() -> PathBuf {
     let mut path =
         PathBuf::from(
@@ -2692,3 +2703,26 @@ fn main()
 // the dark mode is kinda finicky. idk why havent thought about it much
 //anyways thanks for reading the cod
 //anyways thanks for reading the code
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn a_aba_aberta_leva_o_acento_e_as_outras_ficam_com_a_cor_do_texto() {
+        let acento = Color::from_rgb8(0xcb, 0xa6, 0xf7);
+        assert_eq!(
+            aba_marcada(PopupTab::Settings, PopupTab::Settings, acento),
+            Some(acento)
+        );
+        assert_eq!(
+            aba_marcada(PopupTab::Settings, PopupTab::About, acento),
+            None
+        );
+        assert_eq!(
+            aba_marcada(PopupTab::Main, PopupTab::Settings, acento),
+            None
+        );
+        assert_eq!(aba_marcada(PopupTab::Main, PopupTab::About, acento), None);
+    }
+}
